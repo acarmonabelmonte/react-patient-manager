@@ -1,6 +1,6 @@
 # React Veterinary Patient Manager
 
-This is a simple project developed with React, TailwindCSS, Vite, and LocalStorage that allows a veterinary clinic to manage client appointments.
+This is a simple project developed with React, TailwindCSS, Vite, and LocalStorage that allows a veterinary clinic to manage patients.
 
 ## Installation
 
@@ -34,9 +34,9 @@ The project will open in your default browser, and you can begin using the appoi
 
 ## Features
 
-- **Add Appointments:** Fill out the form with client and pet information, then click "Add Appointment" add a new appointment.
-- **Delete Appointments:** Click delete button to remove an appointment.
-- **Edit Appointments:** Click edit button to edit an appointment.
+- **Add patients:** Fill out the form with client and pet information, then click "Add patient" and add a new patient.
+- **Delete patient:** Click delete button to remove a patient.
+- **Edit patient:** Click edit button to edit a patient.
 - **Data Persistence:** Appointments are stored in the browser's LocalStorage, which means appointments will remain available even after page reloads.
 
 ## Technologies Used
