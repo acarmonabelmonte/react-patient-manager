@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import FormError from "./FormError";
 
-const PatientForm = ({ patients, setPatients }) => {
+const PatientForm = ({ patients, setPatients, patient, setPatient }) => {
   const [petName, setPetName] = useState("");
   const [ownerName, setOwnerName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,6 +10,16 @@ const PatientForm = ({ patients, setPatients }) => {
   const [symptoms, setSymptoms] = useState("");
 
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(patient).length > 0) {
+      setPetName(patient.petName);
+      setOwnerName(patient.ownerName);
+      setEmail(patient.email);
+      setRegisterDate(patient.registerDate);
+      setSymptoms(patient.symptoms);
+    }
+  }, [patient]);
 
   const generateId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -32,10 +42,24 @@ const PatientForm = ({ patients, setPatients }) => {
         email,
         registerDate,
         symptoms,
-        id: generateId(),
       };
 
-      setPatients([...patients, patientData]);
+      if (patient.id) {
+        // Edit existing register
+        patientData.id = patient.id;
+
+        const updatedPatients = patients.map((patientState) =>
+          patientState.id === patient.id ? patientData : patientState
+        );
+
+        setPatients(updatedPatients);
+        setPatient({});
+      } else {
+        // Create new register
+        patientData.id = generateId();
+
+        setPatients([...patients, patientData]);
+      }
 
       // Reset Form
       setPetName("");
@@ -147,7 +171,7 @@ const PatientForm = ({ patients, setPatients }) => {
           type="submit"
           className="bg-gradient-to-r from-blue-500 to-blue-600 w-full text-white 
           uppercase font-bold p-3 hover:opacity-75 cursor-pointer transition-all"
-          value="Agregar Paciente"
+          value={patient.id ? "Editar Paciente" : "Agregar Paciente"}
         />
       </form>
     </div>
@@ -157,6 +181,8 @@ const PatientForm = ({ patients, setPatients }) => {
 PatientForm.propTypes = {
   patients: PropTypes.array,
   setPatients: PropTypes.func,
+  patient: PropTypes.object,
+  setPatient: PropTypes.func,
 };
 
 export default PatientForm;
