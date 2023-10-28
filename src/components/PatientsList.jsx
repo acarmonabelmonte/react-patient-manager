@@ -1,7 +1,7 @@
 import Patient from "./Patient";
 import PropTypes from "prop-types";
 
-const PatientsList = ({ patients, setPatient }) => {
+const PatientsList = ({ patients, setPatient, deletePatient }) => {
   return (
     <div className="w-full md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
       {patients && patients.length ? (
@@ -18,6 +18,7 @@ const PatientsList = ({ patients, setPatient }) => {
               patient={patient}
               key={patient.id}
               setPatient={setPatient}
+              deletePatient={deletePatient}
             />
           ))}
         </>
@@ -39,6 +40,7 @@ const PatientsList = ({ patients, setPatient }) => {
 PatientsList.propTypes = {
   patients: PropTypes.array,
   setPatient: PropTypes.func,
+  deletePatient: PropTypes.func,
 };
 
 export default PatientsList;
