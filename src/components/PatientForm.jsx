@@ -1,6 +1,8 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
+import FormError from "./FormError";
 
-const PatientForm = () => {
+const PatientForm = ({ patients, setPatients }) => {
   const [petName, setPetName] = useState("");
   const [ownerName, setOwnerName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,9 +18,24 @@ const PatientForm = () => {
     // Validations
     if ([petName, ownerName, email, registerDate, symptoms].includes("")) {
       setError(true);
-    }
+    } else {
+      const patientData = {
+        petName,
+        ownerName,
+        email,
+        registerDate,
+        symptoms,
+      };
 
-    console.log("Enviando formulario...");
+      setPatients([...patients, patientData]);
+
+      // Reset Form
+      setPetName("");
+      setOwnerName("");
+      setEmail("");
+      setRegisterDate("");
+      setSymptoms("");
+    }
   };
 
   return (
@@ -34,11 +51,7 @@ const PatientForm = () => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
       >
-        {error && (
-          <div className="bg-red-700 text-white text-center p-3 uppercase font-bold mb-3 rounded-md">
-            <p>Todos los campos son obligatorios</p>
-          </div>
-        )}
+        {error && <FormError message="Todos los campos son obligatorios" />}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"
@@ -131,6 +144,11 @@ const PatientForm = () => {
       </form>
     </div>
   );
+};
+
+PatientForm.propTypes = {
+  patients: PropTypes.array,
+  setPatients: PropTypes.func,
 };
 
 export default PatientForm;
