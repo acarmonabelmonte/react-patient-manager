@@ -1,4 +1,26 @@
+import { useState } from "react";
+
 const PatientForm = () => {
+  const [petName, setPetName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [email, setEmail] = useState("");
+  const [registerDate, setRegisterDate] = useState("");
+  const [symptoms, setSymptoms] = useState("");
+
+  const [error, setError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(false);
+
+    // Validations
+    if ([petName, ownerName, email, registerDate, symptoms].includes("")) {
+      setError(true);
+    }
+
+    console.log("Enviando formulario...");
+  };
+
   return (
     <div className="w-full md:w-1/2 lg:w-2/5">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -8,7 +30,15 @@ const PatientForm = () => {
           Adminístralos
         </span>
       </p>
-      <form className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+      >
+        {error && (
+          <div className="bg-red-700 text-white text-center p-3 uppercase font-bold mb-3 rounded-md">
+            <p>Todos los campos son obligatorios</p>
+          </div>
+        )}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"
@@ -22,6 +52,8 @@ const PatientForm = () => {
             type="text"
             id="pet"
             name="pet"
+            value={petName}
+            onChange={(e) => setPetName(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -37,6 +69,8 @@ const PatientForm = () => {
             type="text"
             id="owner"
             name="owner"
+            value={ownerName}
+            onChange={(e) => setOwnerName(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -52,6 +86,8 @@ const PatientForm = () => {
             type="email"
             id="email"
             name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -66,6 +102,8 @@ const PatientForm = () => {
             type="date"
             id="registerDate"
             name="registerDate"
+            value={registerDate}
+            onChange={(e) => setRegisterDate(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -80,6 +118,8 @@ const PatientForm = () => {
             name="symptoms"
             id="symptoms"
             placeholder="Describe los síntomas"
+            value={symptoms}
+            onChange={(e) => setSymptoms(e.target.value)}
           ></textarea>
         </div>
         <input
